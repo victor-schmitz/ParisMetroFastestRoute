@@ -1,8 +1,7 @@
 import heapq
 import math
 
-# Example subway station distances
-station_distances = {
+distancia_estacoes = { # Distancia entre as estacoes
     'E1': {'E2': 10, 'E3': 18.5, 'E4': 24.8, 'E5': 36.4, 'E6': 38.8, 'E7': 35.8, 'E8': 25.4, 'E9': 17.6, 'E10': 9.1, 'E11': 16.7, 'E12': 27.3, 'E13': 27.6, 'E14': 29.8},
     'E2': {'E1': 10, 'E3': 8.5, 'E4': 14.8, 'E5': 26.6, 'E6': 29.1, 'E7': 26.1, 'E8': 17.3, 'E9': 10, 'E10': 3.5, 'E11': 15.5, 'E12': 20.9, 'E13': 19.1, 'E14': 21.8},
     'E3': {'E1': 18.5, 'E2': 8.5, 'E4': 6.3, 'E5': 18.2, 'E6': 20.6, 'E7': 17.6, 'E8': 13.6, 'E9': 9.4, 'E10': 10.3, 'E11': 19.5, 'E12': 19.1, 'E13': 12.1, 'E14': 16.6},
@@ -19,46 +18,45 @@ station_distances = {
     'E14': {'E1': 29.8, 'E2': 21.8, 'E3': 16.6, 'E4': 15.4, 'E5': 17.9, 'E6': 18.2, 'E7': 15.6, 'E8': 27.6, 'E9': 26.6, 'E10': 21.2, 'E11': 35.5, 'E12': 33.6, 'E13': 5.1}
 }
 
-def a_estrela(graph, start, goal):
-    open_set = []
-    heapq.heappush(open_set, (0, start))
-    came_from = {}
-    g_score = {node: float('inf') for node in graph}
-    g_score[start] = 0
-    f_score = {node: float('inf') for node in graph}
-    f_score[start] = heuristic(start, goal)
+def a_estrela(grafo, inicio, destino): # Algoritmo A*
+    lista_aberta = [] # Lista de nós a serem explorados
+    heapq.heappush(lista_aberta, (0, inicio)) # Adiciona o nó inicial na lista de nós a serem explorados
+    veio_de = {} # Dicionário que armazena o nó anterior de cada nó
+    g_score = {node: float('inf') for node in grafo} # Dicionário que armazena o custo do caminho do nó inicial até o nó atual
+    g_score[inicio] = 0 # O custo do caminho do nó inicial até ele mesmo é 0
+    f_score = {node: float('inf') for node in grafo} # Dicionário que armazena o custo do caminho do nó inicial até o nó atual + a heurística
+    f_score[inicio] = heuristica(inicio, destino) # O custo do caminho do nó inicial até ele mesmo + a heurística é a heurística
 
-    while open_set:
-        _, current = heapq.heappop(open_set)
-        if current == goal:
-            return reconstruct_path(came_from, current)
+    while lista_aberta: # Enquanto a lista de nós a serem explorados não estiver vazia
+        _, current = heapq.heappop(lista_aberta) # Remove o nó atual da lista de nós a serem explorados
+        if current == destino: # Se o nó atual for o nó destino
+            return caminho_reconstruido(veio_de, current) # Retorna o caminho reconstruído
         
-        for neighbor in graph[current]:
-            tentative_g_score = g_score[current] + graph[current][neighbor]
-            if tentative_g_score < g_score[neighbor]:
-                came_from[neighbor] = current
-                g_score[neighbor] = tentative_g_score
-                f_score[neighbor] = g_score[neighbor] + heuristic(neighbor, goal)
-                heapq.heappush(open_set, (f_score[neighbor], neighbor))
+        for vizinho in grafo[current]: # Para cada vizinho do nó atual
+            tentativa_g_score = g_score[current] + grafo[current][vizinho] # Calcula o custo do caminho do nó inicial até o vizinho
+            if tentativa_g_score < g_score[vizinho]: # Se o custo do caminho do nó inicial até o vizinho for menor que o custo do caminho do nó inicial até o vizinho
+                veio_de[vizinho] = current # O nó anterior do vizinho é o nó atual
+                g_score[vizinho] = tentativa_g_score # O custo do caminho do nó inicial até o vizinho é o custo do caminho do nó inicial até o vizinho
+                f_score[vizinho] = g_score[vizinho] + heuristica(vizinho, destino) # O custo do caminho do nó inicial até o vizinho + a heurística é o custo do caminho do nó inicial até o vizinho + a heurística
+                heapq.heappush(lista_aberta, (f_score[vizinho], vizinho)) # Adiciona o vizinho na lista de nós a serem explorados
     
     return None
 
-def heuristic(node, goal):
-    if goal in station_distances[node]:
-        return station_distances[node][goal]
+def heuristica(node, destino): # Função heurística
+    if destino in distancia_estacoes[node]: # Se existe uma conexão direta entre o nó e o nó destino
+        return distancia_estacoes[node][destino] # Retorna a distância entre o nó e o nó destino
     else:
-        return float('inf')  # Return a very high value if no direct connection exists
+        return float('inf') # Retorna infinito
 
-def reconstruct_path(came_from, current):
-    path = [current]
-    while current in came_from:
-        current = came_from[current]
-        path.append(current)
-    path.reverse()
-    return path
+def caminho_reconstruido(veio_de, current): # Função que reconstrói o caminho
+    caminho = [current] # Lista que armazena o caminho
+    while current in veio_de: # Enquanto o nó atual estiver no dicionário que armazena o nó anterior de cada nó
+        current = veio_de[current] # O nó atual é o nó anterior do nó atual
+        caminho.append(current) # Adiciona o nó atual na lista que armazena o caminho
+    caminho.reverse() # Inverte a lista que armazena o caminho
+    return caminho 
 
-# Example subway network represented as an adjacency dictionary
-subway_network = {
+estacoes_conectadas = { # Estações conectadas
     'E1': {'E2': 10},
     'E2': {'E1': 10, 'E3': 8.5, 'E9': 10, 'E10': 3.5},
     'E3': {'E2': 8.5, 'E4': 6.3, 'E9': 9.4, 'E13': 18.7},
@@ -75,11 +73,11 @@ subway_network = {
     'E14': {'E13': 5.1}    
 }
 
-start_station = 'E3'
-goal_station = 'E8'
+estacao_inicio = 'E3' 
+estacao_destino = 'E8'
 
-path = a_estrela(subway_network, start_station, goal_station)
-if path:
-    print("Shortest path:", path)
+caminho = a_estrela(estacoes_conectadas, estacao_inicio, estacao_destino) # Chama a função A*
+if caminho: # Se existe um caminho
+    print("Shortest path:", caminho)
 else:
     print("No path found.")
