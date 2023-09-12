@@ -8,7 +8,7 @@ def main():
     MainWindow = QMainWindow()
     ui = Ui_MainWindow()
     ui.setupUi(MainWindow)
-    MainWindow.setFixedSize(523, 563)  # Defina o tamanho fixo da janela
+    MainWindow.setFixedSize(523, 670)  # Defina o tamanho fixo da janela
     
     MainWindow.show()  
     app.exec_()

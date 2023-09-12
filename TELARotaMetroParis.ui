@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>523</width>
-    <height>563</height>
+    <height>695</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -30,16 +30,277 @@
      <pixmap>MapaMetroParis.py.png</pixmap>
     </property>
    </widget>
-  </widget>
-  <widget class="QMenuBar" name="menubar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>523</width>
-     <height>21</height>
-    </rect>
-   </property>
+   <widget class="QLabel" name="label_2">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>520</y>
+      <width>541</width>
+      <height>191</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Times New Roman</family>
+      <weight>75</weight>
+      <italic>true</italic>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap>CorDeFundo.png</pixmap>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_3">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>540</y>
+      <width>261</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Times New Roman</family>
+      <pointsize>12</pointsize>
+      <weight>50</weight>
+      <italic>false</italic>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>Selecione de que estação você está saindo: </string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_4">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>570</y>
+      <width>221</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Times New Roman</family>
+      <pointsize>12</pointsize>
+      <weight>50</weight>
+      <italic>false</italic>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>Selecione qual a estação de destino: </string>
+    </property>
+   </widget>
+   <widget class="QComboBox" name="comboBox">
+    <property name="geometry">
+     <rect>
+      <x>280</x>
+      <y>540</y>
+      <width>91</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
+    <property name="editable">
+     <bool>false</bool>
+    </property>
+    <property name="currentText">
+     <string>E1</string>
+    </property>
+    <property name="maxVisibleItems">
+     <number>14</number>
+    </property>
+    <property name="placeholderText">
+     <string/>
+    </property>
+    <item>
+     <property name="text">
+      <string>E1</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>E2</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>E3</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>E4</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>E5</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>E6</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>E7</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>E8</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>E9</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>E10</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>E11</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>E12</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>E13</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>E14</string>
+     </property>
+    </item>
+   </widget>
+   <widget class="QComboBox" name="comboBox_2">
+    <property name="geometry">
+     <rect>
+      <x>240</x>
+      <y>570</y>
+      <width>91</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
+    <property name="maxVisibleItems">
+     <number>14</number>
+    </property>
+    <item>
+     <property name="text">
+      <string>E1</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>E2</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>E3</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>E4</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>E5</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>E6</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>E7</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>E8</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>E9</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>E10</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>E11</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>E12</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>E13</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>E14</string>
+     </property>
+    </item>
+   </widget>
+   <widget class="QPushButton" name="pushButton">
+    <property name="geometry">
+     <rect>
+      <x>394</x>
+      <y>560</y>
+      <width>101</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Times New Roman</family>
+      <pointsize>12</pointsize>
+     </font>
+    </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
+    <property name="text">
+     <string>Pesquisar Rota</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
