@@ -19,45 +19,7 @@ class RotaMetroParis:
         'E14': {'E1': 29.8, 'E2': 21.8, 'E3': 16.6, 'E4': 15.4, 'E5': 17.9, 'E6': 18.2, 'E7': 15.6, 'E8': 27.6, 'E9': 26.6, 'E10': 21.2, 'E11': 35.5, 'E12': 33.6, 'E13': 5.1}
     }
 
-    def a_estrela(self, grafo, inicio, destino): # Algoritmo A*
-        lista_aberta = [] # Lista de nós a serem explorados
-        heapq.heappush(lista_aberta, (0, inicio)) # Adiciona o nó inicial na lista de nós a serem explorados
-        veio_de = {} # Dicionário que armazena o nó anterior de cada nó
-        g_score = {node: float('inf') for node in grafo} # Dicionário que armazena o custo do caminho do nó inicial até o nó atual
-        g_score[inicio] = 0 # O custo do caminho do nó inicial até ele mesmo é 0
-        f_score = {node: float('inf') for node in grafo} # Dicionário que armazena o custo do caminho do nó inicial até o nó atual + a heurística
-        f_score[inicio] = self.heuristica(inicio, destino) # O custo do caminho do nó inicial até ele mesmo + a heurística é a heurística
-
-        while lista_aberta: # Enquanto a lista de nós a serem explorados não estiver vazia
-            _, current = heapq.heappop(lista_aberta) # Remove o nó atual da lista de nós a serem explorados
-            if current == destino: # Se o nó atual for o nó destino
-                return self.caminho_reconstruido(veio_de, current) # Retorna o caminho reconstruído
-
-            for vizinho in grafo[current]: # Para cada vizinho do nó atual
-                tentativa_g_score = g_score[current] + grafo[current][vizinho] # Calcula o custo do caminho do nó inicial até o vizinho
-                if tentativa_g_score < g_score[vizinho]: # Se o custo do caminho do nó inicial até o vizinho for menor que o custo do caminho do nó inicial até o vizinho
-                    veio_de[vizinho] = current # O nó anterior do vizinho é o nó atual
-                    g_score[vizinho] = tentativa_g_score # O custo do caminho do nó inicial até o vizinho é o custo do caminho do nó inicial até o vizinho
-                    f_score[vizinho] = g_score[vizinho] + self.heuristica(vizinho, destino) # O custo do caminho do nó inicial até o vizinho + a heurística é o custo do caminho do nó inicial até o vizinho + a heurística
-                    heapq.heappush(lista_aberta, (f_score[vizinho], vizinho)) # Adiciona o vizinho na lista de nós a serem explorados
-
-        return None
-
-    def heuristica(self, node, destino): # Função heurística
-        if destino in self.distancia_estacoes[node]: # Se existe uma conexão direta entre o nó e o nó destino
-            return self.distancia_estacoes[node][destino] # Retorna a distância entre o nó e o nó destino
-        else:
-            return float('inf') # Retorna infinito
-
-    def caminho_reconstruido(self, veio_de, current): # Função que reconstrói o caminho
-        caminho = [current] # Lista que armazena o caminho
-        while current in veio_de: # Enquanto o nó atual estiver no dicionário que armazena o nó anterior de cada nó
-            current = veio_de[current] # O nó atual é o nó anterior do nó atual
-            caminho.append(current) # Adiciona o nó atual na lista que armazena o caminho
-        caminho.reverse() # Inverte a lista que armazena o caminho
-        return caminho 
-
-estacoes_conectadas = { # Estações conectadas
+    estacoes_conectadas = { # Estações conectadas
         'E1': {'E2': 10},
         'E2': {'E1': 10, 'E3': 8.5, 'E9': 10, 'E10': 3.5},
         'E3': {'E2': 8.5, 'E4': 6.3, 'E9': 9.4, 'E13': 18.7},
@@ -74,13 +36,40 @@ estacoes_conectadas = { # Estações conectadas
         'E14': {'E13': 5.1}    
         }
 
-# estacao_inicio = 'E3' 
-# estacao_destino = 'E8'
+    def a_estrela(self, grafo, inicio, destino): # Algoritmo A*
+        lista_aberta = [] # Lista de nós a serem explorados
+        heapq.heappush(lista_aberta, (0, inicio)) # Adiciona o nó inicial na lista de nós a serem explorados. É uma fila de prioridade, para que o nó com menor custo seja sempre o primeiro da lista
+        veio_de = {} # Dicionário que armazena o nó anterior de cada nó. Em outras palavras, ela armazena qual nó levou a outro nó ao longo do caminho
+        g_score = {node: float('inf') for node in grafo} # Dicionário que armazena o custo do caminho do nó inicial até o nó atual. Inicialmente, a gente duduz que o custo do caminho do nó inicial até qualquer outro nó é infinito
+        g_score[inicio] = 0 # O custo do caminho do nó inicial até ele mesmo é 0
+        f_score = {node: float('inf') for node in grafo} # Dicionário que armazena o custo do caminho do nó inicial até o nó atual + a heurística
+        f_score[inicio] = self.heuristica(inicio, destino)
 
+        while lista_aberta: # Enquanto a lista de nós a serem explorados não estiver vazia
+            _, current = heapq.heappop(lista_aberta) # Remove o nó atual da lista de nós a serem explorados
+            if current == destino: # Se o nó atual for o nó destino. Significa que o algortimo achou um caminho válido
+                return self.caminho_reconstruido(veio_de, current) # Retorna o caminho reconstruído
 
-#rota_paris = RotaMetroParis()  # Criando uma instância da classe
-#caminho = rota_paris.a_estrela(estacoes_conectadas, estacao_inicio, estacao_destino) # Chama a função A*
-#if caminho: # Se existe um caminho
-#    print("Shortest path:", caminho)
-#else:
-#    print("No path found.")
+            for vizinho in grafo[current]: # Para cada vizinho do nó atual
+                tentativa_g_score = g_score[current] + grafo[current][vizinho] # Calcula o custo do caminho do nó inicial até o vizinho
+                if tentativa_g_score < g_score[vizinho]: # Se o novo caminho até o vizinho é menor que o atual caminho até o vizinho
+                    veio_de[vizinho] = current # O nó anterior do vizinho é o nó current
+                    g_score[vizinho] = tentativa_g_score # O custo do menor caminho do nó inicial até agora para chegar no vizinho é o tentativa_g_score
+                    f_score[vizinho] = g_score[vizinho] + self.heuristica(vizinho, destino) # Atualiza o f_score
+                    heapq.heappush(lista_aberta, (f_score[vizinho], vizinho)) # Adiciona o vizinho na lista de nós a serem explorados
+
+        return None
+
+    def heuristica(self, node, destino): # Função heurística
+        if destino in self.distancia_estacoes[node]: # Se existe uma conexão direta entre o nó e o nó destino
+            return self.distancia_estacoes[node][destino] # Retorna a distância entre o nó e o nó destino
+        else:
+            return float('inf') # Retorna infinito
+
+    def caminho_reconstruido(self, veio_de, current): # Função que reconstrói o caminho
+        caminho = [current] # Lista que armazena o caminho
+        while current in veio_de: # Enquanto o nó atual estiver no dicionário que armazena o nó anterior de cada nó.Reconstroi o caminho completo, começando do nó de destino e retrocedendo até o nó de origem
+            current = veio_de[current] # Atualiza o current para o nó anterior ao nó atual
+            caminho.append(current) # Adiciona o nó atual na lista que armazena o caminho
+        caminho.reverse() # Inverte a lista que armazena o caminho
+        return caminho 

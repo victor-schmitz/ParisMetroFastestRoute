@@ -6,12 +6,12 @@ from PyQt5.QtGui import QFont
 
 class MainWindow(QMainWindow, Ui_MainWindow):
     def __init__(self, estacoes_conectadas):
-        super().__init__()
-        self.setupUi(self)
+        super().__init__() # Chamando o construtor da classe QMainWindow  
+        self.setupUi(self) # Metodo gerado pelo Qt Designer para criar a interface gráfica
 
-        self.estacoes_conectadas = estacoes_conectadas
-        self.estacao_labels = {
-            'E1': self.labelE1,
+        self.estacoes_conectadas = estacoes_conectadas # Para usar estacoes_conectadas em toda a classe
+        self.estacao_labels = {  # Dicionário que armazena os labels das estações
+            'E1': self.labelE1, 
             'E2': self.labelE2,
             'E3': self.labelE3,
             'E4': self.labelE4,
@@ -27,41 +27,39 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             'E14': self.labelE14
         }
 
-        font = QFont("Times New Roman", 12)
-        self.labelCaminho.setFont(font)
+        font = QFont("Times New Roman", 12) 
+        self.labelCaminho.setFont(font) # Definindo a fonte e tamanho do labelCaminho
         
-        self.pushButton.clicked.connect(self.pesquisarRota)
+        self.pushButton.clicked.connect(self.pesquisarRota) # Conectar o botão à função pesquisarRota
 
-    def pesquisarRota(self):
-        # Obtenha as estações de origem e destino selecionadas
+    def pesquisarRota(self): # Função para pesquisar a rota
+        # Obtendo as estações de origem e destino selecionadas
         estacao_origem = self.comboBox.currentText()
         estacao_destino = self.comboBox_2.currentText()
 
-        # Crie uma instância da classe RotaMetroParis
+        # Instância da classe RotaMetroParis
         rota_paris = RotaMetroParis()
 
-        # Chame a função a_estrela para encontrar o caminho mais curto
+        # Chamando a função a_estrela para encontrar o caminho mais curto
         caminho = rota_paris.a_estrela(self.estacoes_conectadas, estacao_origem, estacao_destino)            
 
-        self.labelCaminho.setText("")
+        self.labelCaminho.setText("") # Limpando o labelCaminho
 
-        # Verifique se um caminho foi encontrado
+        # Verificando se um caminho foi encontrado
         if caminho:
             print("Caminho mais curto:", caminho)
-            caminho_formatado = " -> ".join(caminho)  # Formate o caminho como uma string "E14 -> E13 -> E3 -> E9"
+            caminho_formatado = " -> ".join(caminho)  # Formatando o caminho como uma string. Exemplo: "E14 -> E13 -> E3 -> E9"
             self.labelCaminho.setText(caminho_formatado)
-            self.mostrarCaminhoNoMapa(caminho)  # Chame a função para mostrar os labels
-
-            # Exiba o caminho na interface ou faça o que quiser com ele
+            self.mostrarCaminhoNoMapa(caminho)  # Chamando a função para mostrar os labels
         else:
             QMessageBox.warning(self, "Sem rota encontrada", "Não foi possível encontrar uma rota entre as estações selecionadas.", QMessageBox.Ok)
 
     def mostrarCaminhoNoMapa(self, caminho):
-        # Primeiro, oculte todas as labels de estação
+        # Ocultar todas as labels de estação
         for label in self.estacao_labels.values():
             label.setHidden(True)
 
-        # Em seguida, mostre apenas as labels das estações no caminho
+        # Selecionando apenas as labels das estações no caminho
         for estacao in caminho:
             if estacao in self.estacao_labels:
                 self.estacao_labels[estacao].setHidden(False)            
@@ -84,25 +82,26 @@ def main():
         'E14': {'E13': 5.1}    
     }
 
-    app = QApplication(sys.argv)
-    window = MainWindow(estacoes_conectadas)
-    window.labelE1.setHidden(True)  # Para ocultar o labelE1
-    window.labelE2.setHidden(True)  # Para ocultar o labelE2
-    window.labelE3.setHidden(True)  # Para ocultar o labelE3
-    window.labelE4.setHidden(True)  # Para ocultar o labelE4
-    window.labelE5.setHidden(True)  # Para ocultar o labelE5
-    window.labelE6.setHidden(True)  # Para ocultar o labelE6
-    window.labelE7.setHidden(True)  # Para ocultar o labelE7
-    window.labelE8.setHidden(True)  # Para ocultar o labelE8
-    window.labelE9.setHidden(True)  # Para ocultar o labelE9
-    window.labelE10.setHidden(True)  # Para ocultar o labelE10
-    window.labelE11.setHidden(True)  # Para ocultar o labelE11
-    window.labelE12.setHidden(True)  # Para ocultar o labelE12
-    window.labelE13.setHidden(True)  # Para ocultar o labelE13
-    window.labelE14.setHidden(True)  # Para ocultar o labelE14
-    window.setFixedSize(523, 670)  # Defina o tamanho fixo da janela
-    window.show()
-    app.exec_()
+    app = QApplication(sys.argv) 
+    window = MainWindow(estacoes_conectadas) 
+    # Ocultando os labels no inicio do programa
+    window.labelE1.setHidden(True)  
+    window.labelE2.setHidden(True)  
+    window.labelE3.setHidden(True)  
+    window.labelE4.setHidden(True)  
+    window.labelE5.setHidden(True)  
+    window.labelE6.setHidden(True) 
+    window.labelE7.setHidden(True)  
+    window.labelE8.setHidden(True) 
+    window.labelE9.setHidden(True) 
+    window.labelE10.setHidden(True) 
+    window.labelE11.setHidden(True)  
+    window.labelE12.setHidden(True)  
+    window.labelE13.setHidden(True)  
+    window.labelE14.setHidden(True) 
+    window.setFixedSize(523, 670)  # Definindo o tamanho FIXO da janela
+    window.show() # Exibindo a janela
+    app.exec_() # Executando o programa, iniciando os eventos do Qt 
 
-if __name__ == "__main__":
-    main()
+if __name__ == "__main__": # Se o programa for executado diretamente 
+    main() # Chama a função main()
