@@ -58,28 +58,29 @@ class RotaMetroParis:
         return caminho 
 
 estacoes_conectadas = { # Estações conectadas
-    'E1': {'E2': 10},
-    'E2': {'E1': 10, 'E3': 8.5, 'E9': 10, 'E10': 3.5},
-    'E3': {'E2': 8.5, 'E4': 6.3, 'E9': 9.4, 'E13': 18.7},
-    'E4': {'E3': 6.3, 'E5': 13, 'E8': 15.3, 'E13': 12.8},
-    'E5': {'E4': 13, 'E6': 3, 'E7': 2.4, 'E8': 30},
-    'E6': {'E5': 3},
-    'E7': {'E5': 2.4},
-    'E8': {'E4': 15.3, 'E9': 9.6, 'E12': 6.4, 'E5': 30},
-    'E9': {'E2': 10, 'E3': 9.4,'E11': 12.2, 'E8': 9.6},
-    'E10': {'E2': 3.5},
-    'E11': {'E9': 12.2},
-    'E12': {'E8': 6.4, 'E10': 3.5},
-    'E13': {'E14': 5.1, 'E3': 18.7, 'E4': 12.8},
-    'E14': {'E13': 5.1}    
-}
+        'E1': {'E2': 10},
+        'E2': {'E1': 10, 'E3': 8.5, 'E9': 10, 'E10': 3.5},
+        'E3': {'E2': 8.5, 'E4': 6.3, 'E9': 9.4, 'E13': 18.7},
+        'E4': {'E3': 6.3, 'E5': 13, 'E8': 15.3, 'E13': 12.8},
+        'E5': {'E4': 13, 'E6': 3, 'E7': 2.4, 'E8': 30},
+        'E6': {'E5': 3},
+        'E7': {'E5': 2.4},
+        'E8': {'E4': 15.3, 'E9': 9.6, 'E12': 6.4, 'E5': 30},
+        'E9': {'E2': 10, 'E3': 9.4,'E11': 12.2, 'E8': 9.6},
+        'E10': {'E2': 3.5},
+        'E11': {'E9': 12.2},
+        'E12': {'E8': 6.4},
+        'E13': {'E14': 5.1, 'E3': 18.7, 'E4': 12.8},
+        'E14': {'E13': 5.1}    
+        }
 
-estacao_inicio = 'E3' 
-estacao_destino = 'E8'
+# estacao_inicio = 'E3' 
+# estacao_destino = 'E8'
 
-rota_paris = RotaMetroParis()  # Criando uma instância da classe
-caminho = rota_paris.a_estrela(estacoes_conectadas, estacao_inicio, estacao_destino) # Chama a função A*
-if caminho: # Se existe um caminho
-    print("Shortest path:", caminho)
-else:
-    print("No path found.")
+
+#rota_paris = RotaMetroParis()  # Criando uma instância da classe
+#caminho = rota_paris.a_estrela(estacoes_conectadas, estacao_inicio, estacao_destino) # Chama a função A*
+#if caminho: # Se existe um caminho
+#    print("Shortest path:", caminho)
+#else:
+#    print("No path found.")
