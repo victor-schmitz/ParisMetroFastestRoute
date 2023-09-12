@@ -2,6 +2,7 @@ import sys
 from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox
 from TELARotaMetroParis_ui import Ui_MainWindow
 from RotaMetroParis import RotaMetroParis
+from PyQt5.QtGui import QFont
 
 class MainWindow(QMainWindow, Ui_MainWindow):
     def __init__(self, estacoes_conectadas):
@@ -26,6 +27,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             'E14': self.labelE14
         }
 
+        font = QFont("Times New Roman", 12)
+        self.labelCaminho.setFont(font)
+        
         self.pushButton.clicked.connect(self.pesquisarRota)
 
     def pesquisarRota(self):
@@ -39,9 +43,13 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         # Chame a função a_estrela para encontrar o caminho mais curto
         caminho = rota_paris.a_estrela(self.estacoes_conectadas, estacao_origem, estacao_destino)            
 
+        self.labelCaminho.setText("")
+
         # Verifique se um caminho foi encontrado
         if caminho:
             print("Caminho mais curto:", caminho)
+            caminho_formatado = " -> ".join(caminho)  # Formate o caminho como uma string "E14 -> E13 -> E3 -> E9"
+            self.labelCaminho.setText(caminho_formatado)
             self.mostrarCaminhoNoMapa(caminho)  # Chame a função para mostrar os labels
 
             # Exiba o caminho na interface ou faça o que quiser com ele
@@ -52,7 +60,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         # Primeiro, oculte todas as labels de estação
         for label in self.estacao_labels.values():
             label.setHidden(True)
-            
+
         # Em seguida, mostre apenas as labels das estações no caminho
         for estacao in caminho:
             if estacao in self.estacao_labels:
@@ -92,24 +100,6 @@ def main():
     window.labelE12.setHidden(True)  # Para ocultar o labelE12
     window.labelE13.setHidden(True)  # Para ocultar o labelE13
     window.labelE14.setHidden(True)  # Para ocultar o labelE14
-
-    estacao_labels = {
-    'E1': window.labelE1,
-    'E2': window.labelE2,
-    'E3': window.labelE3,
-    'E4': window.labelE4,
-    'E5': window.labelE5,
-    'E6': window.labelE6,
-    'E7': window.labelE7,
-    'E8': window.labelE8,
-    'E9': window.labelE9,
-    'E10': window.labelE10,
-    'E11': window.labelE11,
-    'E12': window.labelE12,
-    'E13': window.labelE13,
-    'E14': window.labelE14
-    }
-
     window.setFixedSize(523, 670)  # Defina o tamanho fixo da janela
     window.show()
     app.exec_()
